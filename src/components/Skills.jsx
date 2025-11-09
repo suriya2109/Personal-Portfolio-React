@@ -89,7 +89,7 @@ const SKILLS_SECTIONS = [
     {
         icon: <Code className="w-6 h-6" />,
         title: "Core Technologies",
-    tags: ["JavaScript (ES6+)", "TypeScript", "HTML5", "CSS3", "Angular (v19)", "React", "Node.js", "Redux"]
+    tags: ["JavaScript (ES6+)", "TypeScript", "HTML5", "CSS3", "Angular (v19)", "React", "Node.js"]
     },
     {
         icon: <Layers className="w-6 h-6" />,
