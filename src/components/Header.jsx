@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Sun, Moon, Menu } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const headerVariants = {
   hidden: { y: -100, opacity: 0 },
@@ -36,6 +36,27 @@ const Header = memo(({ toggleTheme, currentTheme, onHamburgerClick }) => {
   const ThemeIcon = useMemo(() => (currentTheme === "light" ? Moon : Sun), [currentTheme]);
   const themeAriaLabel = useMemo(() => `Switch to ${currentTheme === "light" ? "dark" : "light"} mode`, [currentTheme]);
 
+  const navigate = useNavigate();
+
+  const handleNavClick = useCallback((e, to) => {
+    // intercept navigation to enable smooth scrolling between Home sections
+    e.preventDefault();
+    const id = to.replace(/^\//, "");
+
+    if (location.pathname === "/") {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        // update hash without reloading
+        window.history.replaceState({}, "", `#${id}`);
+        return;
+      }
+    }
+
+    // If not on home or element not found, navigate to home and pass scroll request
+    navigate("/", { state: { scrollTo: id } });
+  }, [location.pathname, navigate]);
+
   return (
     <motion.header
       variants={headerVariants}
@@ -46,24 +67,25 @@ const Header = memo(({ toggleTheme, currentTheme, onHamburgerClick }) => {
     >
       {/* THE FIX: Changed Link to point to "/" */}
       <Link to="/" className="text-2xl sm:text-3xl font-extrabold text-primary tracking-wide select-none hover:opacity-80 transition">
-        Shashank Raj
+        Suriya Periyasamy
       </Link>
 
       <nav className="hidden min-[935px]:flex gap-2 sm:gap-4 md:gap-6 items-center">
         {navLinks.map(link => {
-          // THE FIX: Check for both '/' and '/about' to highlight the "About" link
+          // Check for both '/' and '/about' to highlight the "About" link
           const isActive = location.pathname === link.to || (link.to === '/about' && location.pathname === '/');
           return (
-            <Link
+            <a
               key={link.to}
-              to={link.to}
+              href={link.to}
+              onClick={(e) => handleNavClick(e, link.to)}
               className={`px-3 py-1.5 rounded-md text-base font-medium transition-colors duration-150
                 ${isActive
                   ? "text-primary bg-primary/10 dark:bg-primary/20"
                   : "text-muted-foreground hover:text-primary hover:bg-primary/5"}`}
             >
               {link.label}
-            </Link>
+            </a>
           );
         })}
         <button

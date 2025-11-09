@@ -86,10 +86,26 @@ SkillSection.displayName = "SkillSection";
 
 // --- Static Data (No changes needed) ---
 const SKILLS_SECTIONS = [
-    { icon: <Code className="w-6 h-6" />, title: "Programming Languages", tags: ["C", "C++", "Java", "JavaScript", "Python", "HTML", "CSS"] },
-    { icon: <Layers className="w-6 h-6" />, title: "Frameworks & Libraries", tags: ["React", "Tailwind CSS", "SFML", "NumPy", "Pandas"] },
-    { icon: <Terminal className="w-6 h-6" />, title: "Tools & Platforms", tags: ["Git", "GitHub", "VS Code", "Jupyter Notebook", "Sublime Text"] },
-    { icon: <Sparkles className="w-6 h-6" />, title: "Interests", tags: ["Competitive Programming", "DSA", "Machine Learning", "Web Development"] },
+    {
+        icon: <Code className="w-6 h-6" />,
+        title: "Core Technologies",
+    tags: ["JavaScript (ES6+)", "TypeScript", "HTML5", "CSS3", "Angular (v19)", "React", "Node.js", "Redux"]
+    },
+    {
+        icon: <Layers className="w-6 h-6" />,
+        title: "Frameworks & Libraries",
+    tags: ["Next.js", "RxJS", "Tailwind CSS", "Material UI", "Bootstrap", "SCSS/SASS", "REST APIs", "Vue.js", "Express.js"]
+    },
+    {
+        icon: <Terminal className="w-6 h-6" />,
+        title: "Development & Tools",
+    tags: ["Git", "GitHub", "VS Code","Bitbucket", "Performance Optimization", "MySQL", "SEO"]
+    },
+    {
+        icon: <Sparkles className="w-6 h-6" />,
+        title: "Specialization & Interests",
+    tags: ["Full Stack Development", "Component Architecture", "Agile/Scrum", "UI/UX", "Problem Solving", "Technical Leadership", "DSA", "System Design (Basic)"]
+    },
 ];
 
 

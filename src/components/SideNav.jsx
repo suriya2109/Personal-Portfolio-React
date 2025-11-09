@@ -9,7 +9,7 @@ import {
   Mail,
   X,
 } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // Move static data outside component
 const navLinks = [
@@ -59,13 +59,14 @@ const overlayVariants = {
 };
 
 // Memoized nav item component
-const NavItem = memo(({ link, onNavClick, isActive }) => {
+const NavItem = memo(({ link, onNavClick, isActive, onClickOverride }) => {
   const Icon = link.icon;
   return (
     <motion.li variants={itemVariants} className="w-full">
-      <Link
-        to={link.to}
-        onClick={onNavClick}
+      {/* Use an anchor so keyboard users can tab; allow an override handler for click logic */}
+      <a
+        href={link.to}
+        onClick={onClickOverride || onNavClick}
         className={`flex flex-row items-center justify-start gap-4 text-lg font-medium transition-colors duration-200 py-2 w-full
           ${isActive ? "text-primary" : "text-foreground hover:text-primary"}
         `}
@@ -73,7 +74,7 @@ const NavItem = memo(({ link, onNavClick, isActive }) => {
       >
         <Icon className="w-5 h-5 flex-shrink-0" style={{ display: 'inline-block' }} />
         <span className="leading-none" style={{ display: 'inline-block' }}>{link.text}</span>
-      </Link>
+      </a>
     </motion.li>
   );
 });
@@ -81,6 +82,7 @@ NavItem.displayName = "NavItem";
 
 const SideNav = memo(({ open, onClose }) => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Memoize event handlers
   const handleKeyDown = useCallback((e) => {
@@ -109,14 +111,35 @@ const SideNav = memo(({ open, onClose }) => {
 
   // Memoize nav items to prevent recreation
   const navItems = useMemo(() =>
-    navLinks.map((link) => (
-      <NavItem
-        key={link.to}
-        link={link}
-        onNavClick={onClose}
-        isActive={location.pathname === link.to}
-      />
-    )), [onClose, location.pathname]
+    navLinks.map((link) => {
+      const handleClick = (e) => {
+        e.preventDefault();
+        const id = link.to.replace(/^\//, "");
+
+        if (location.pathname === "/") {
+          const el = document.getElementById(id);
+          if (el) {
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+            window.history.replaceState({}, "", `#${id}`);
+            onClose();
+            return;
+          }
+        }
+
+        navigate("/", { state: { scrollTo: id } });
+        onClose();
+      };
+
+      return (
+        <NavItem
+          key={link.to}
+          link={link}
+          onNavClick={onClose}
+          isActive={location.pathname === link.to}
+          onClickOverride={handleClick}
+        />
+      );
+    }), [onClose, location.pathname, navigate]
   );
 
   return (
@@ -140,7 +163,7 @@ const SideNav = memo(({ open, onClose }) => {
         initial={false}
         animate={open ? "open" : "closed"}
         variants={navVariants}
-        className="side-nav-panel fixed top-0 right-0 w-[270px] h-screen bg-card shadow-lg z-50 flex flex-col p-6 pt-8"
+        className="side-nav-panel fixed top-0 right-0 w-[85vw] max-w-[270px] h-screen bg-card shadow-lg z-50 flex flex-col p-4 sm:p-6 pt-6 sm:pt-8"
         aria-label="Main Navigation"
         style={{
           willChange: "transform, opacity",

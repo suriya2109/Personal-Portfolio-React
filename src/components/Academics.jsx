@@ -78,24 +78,14 @@ EducationCard.displayName = "EducationCard";
 // --- Static Data (No changes needed) ---
 const ACADEMICS_DATA = [
   {
-    logo: "/assets/logos/iit_bhu.png",
-    alt: "IIT BHU Logo",
-    title: "Indian Institute of Technology (BHU) Varanasi",
-    link: "https://iitbhu.ac.in/dept/civ",
-    program: "B.Tech in Civil Engineering",
-    year: "2023 – 2027",
+    logo: "/assets/logos/dsec-logo.png",
+    alt: "Dsec",
+    title: "Dhanalakshmi Srinivasan Engineering College",
+    link: "http://www.dsgroups.org/",
+    program: "B.E in Mechanical Engineering",
+    year: "2016 – 2020",
     scoreLabel: "CGPA",
-    score: "8.14 / 10",
-  },
-  {
-    logo: "/assets/logos/sps_rohini.jpg",
-    alt: "SPS Rohini Logo",
-    title: "Sachdeva Public School, Rohini",
-    link: "https://www.spsrohini.com/",
-    program: "CBSE (Class XII - 2022, Class X - 2020)",
-    year: "2022",
-    scoreLabel: "Percentage",
-    score: "Class XII - 92.80%, Class X - 97.00%",
+    score: "7.24 / 10",
   },
 ];
 

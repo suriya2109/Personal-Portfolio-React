@@ -26,33 +26,40 @@ Tag.displayName = "Tag";
 
 const SOCIAL_LINKS = [
   {
-    href: "https://github.com/shashank2401",
+    href: "https://github.com/suriya2109",
     icon: <Github className="w-5 h-5" />,
     title: "GitHub",
   },
   {
-    href: "https://www.linkedin.com/in/shashankraj2401/",
+    href: "https://www.linkedin.com/in/suriya-periyasamy-a011161a1/",
     icon: <Linkedin className="w-5 h-5" />,
     title: "LinkedIn",
   },
   {
-    href: "mailto:shashankraj0124@gmail.com",
+    href: "mailto:suriyame2107@gmail.com",
     icon: <Mail className="w-5 h-5" />,
     title: "Email",
   },
 ];
 
 const TAGS = [
-  "Competitive Programming",
-  "Data Structures",
-  "Algorithms",
-  "C++",
-  "Problem Solving",
-  "Web Development",
+  "Angular",
+  "React",
+  "TypeScript",
+  "JavaScript",
+  "HTML5",
+  "CSS3",
+  "RxJS",
+  "Next.js",
+  "Tailwind CSS",
+  "Node.js",
+  "DSA",
+  "System Design Basic",
+  "Performance Optimization",
+  "Prompting AI",
 ];
 
-const RESUME_URL =
-  "https://drive.google.com/file/d/1FIq3CNO73-M9GXjIhZAYo49gQGxgmudO/view?usp=sharing";
+const RESUME_URL = "/assets/SuriyaPeriysamy.pdf";
 
 export default memo(function About() {
   const socialLinksElements = useMemo(
@@ -79,9 +86,9 @@ export default memo(function About() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="w-full min-h-[80vh] flex items-center justify-center"
+      className="w-full flex items-center justify-center py-8 sm:py-12"
     >
-      <div className="flex flex-col md:flex-row items-center justify-center gap-12 w-full max-w-5xl px-4 py-12">
+      <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 w-full max-w-6xl">
         {/* Profile Image */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
@@ -89,11 +96,11 @@ export default memo(function About() {
           transition={{ duration: 0.6 }}
           className="flex-shrink-0 w-40 h-40 sm:w-56 sm:h-56 rounded-full overflow-hidden border-4 border-white dark:border-neutral-900 shadow-md bg-neutral-200 dark:bg-neutral-800"
           tabIndex={0}
-          aria-label="Profile photo of Shashank Raj"
+          aria-label="Profile photo of Suriya Periyasamy"
         >
           <img
-            src="/assets/MyPhotograph.png"
-            alt="Shashank Raj"
+            src="/assets/suriya.png"
+            alt="Suriya Periyasamy"
             loading="lazy"
             decoding="async"
             className="object-cover w-full h-full"
@@ -118,24 +125,20 @@ export default memo(function About() {
           <h1 className="text-4xl sm:text-5xl font-bold leading-tight mb-3 text-foreground text-center md:text-left">
             Hi, I'm{" "}
             <span className="bg-gradient-to-r from-neutral-800 via-neutral-700 to-neutral-600 dark:from-white dark:via-neutral-300 dark:to-neutral-400 bg-clip-text text-transparent">
-              Shashank Raj
+              Suriya Periyasamy
             </span>
           </h1>
 
           <div className="flex items-center justify-center md:justify-start gap-2 text-muted-foreground text-sm mb-2">
             <GraduationCap className="w-4 h-4" />
-            <span>IIT (BHU) Varanasi</span>
+            <span>Senior Software Engineer at Novac Technology Solutions</span>
           </div>
 
-          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-xl mb-4 text-center md:text-left">
-            I'm a passionate student with a strong interest in{" "}
+          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-xxl mb-4 text-center md:text-left">
+            I'm a Senior Software Engineer with 3+ years of experience in{" "}
             <span className="text-foreground font-medium">
-              competitive programming
-            </span>{" "}
-            and tackling challenging problems. I love crafting efficient
-            solutions and exploring new technologies. My journey in tech
-            combines rigorous academic training with hands-on project
-            experience.
+              building fast, scalable, and user-focused web applications
+            using Angular, React, TypeScript, and modern web technologies</span>{" "}. I specialize in optimizing high-traffic systems and improving load times by up to 40% through lazy loading, code-splitting, and reusable component architectures. I follow clean code principles, prioritize performance and maintainability, and use Tailwind CSS for styling.<span className="text-foreground font-medium"> Currently, I’m enhancing my expertise in Data Structures & Algorithms, having solved 106+ LeetCode problems in JavaScript </span>{" "}. When suggesting code, GitHub Copilot should prefer Angular (latest version) and React functional components, use TypeScript when possible, follow modular and scalable architectures, utilize Tailwind CSS for styling, and generate performant, clean, and readable code.
           </p>
 
           <div className="flex flex-wrap gap-2 mb-4 justify-center md:justify-start">

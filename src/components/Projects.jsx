@@ -36,6 +36,17 @@ const ProjectCard = memo(({ project }) => {
       variants={itemVariants}
       className="bg-white/90 dark:bg-neutral-900/80 border border-neutral-200 dark:border-neutral-700 rounded-2xl shadow p-6 flex flex-col h-full"
     >
+      {/* optional screenshot/banner for the project */}
+      {project.image && (
+        <div className="mb-4 overflow-hidden rounded-lg">
+          <img
+            src={project.image}
+            alt={`${project.title}`}
+            className="w-full h-40 object-cover border border-neutral-200 dark:border-neutral-700"
+          />
+        </div>
+      )}
+
       <h3 className="text-xl font-bold text-foreground mb-3 leading-tight">
         {project.title}
       </h3>
@@ -80,12 +91,64 @@ ProjectCard.displayName = "ProjectCard";
 function ProjectsComponent() {
   const projectsData = useMemo(
     () => [
-      { title: "Text File Compressor", desc: "Built a robust, lossless text file compressor in C++ using the LZW algorithm, applying OOP and advanced algorithms. Achieved ~44% file size reduction on real-world files with efficient compression and decompression.", tags: ["C++", "LZW Algorithm", "OOPS"], links: [{ type: "code", href: "https://github.com/shashank2401/file-compressor-in-cpp" }] },
-      { title: "Pathfinding Visualizer", desc: "Interactive C++/SFML visualizer for Dijkstra's and A* algorithms. Features dynamic obstacles, diagonal movement, OOP, and optimized data structures for smooth, real-time animations.", tags: ["C++", "SFML", "Dijkstra's", "A*", "OOPS", "Data Structures"], links: [{ type: "code", href: "https://github.com/shashank2401/pathfinding-visualizer-in-cpp" }] },
-      { title: "Codeforces Visualizer", desc: "A minimal web app to view and compare Codeforces profiles. Shows key stats, rating history, and performance trends with clean visualizations. Built for fast, distraction-free, side-by-side comparisons.", tags: ["React", "Vite", "JavaScript", "Tailwind CSS", "Codeforces API"], links: [{ type: "demo", href: "https://cf-visualizer-rho.vercel.app" }, { type: "code", href: "https://github.com/shashank2401/cf-visualizer" }] },
-      { title: "GitHub Profile Visualizer", desc: "A dynamic app for exploring and comparing GitHub user profiles. Visualizes rich statistics, activity timelines, and repository insights, including a contribution heatmap. Supports side-by-side comparisons and offers both dark and light modes.", tags: ["React", "Vite", "JavaScript", "Tailwind CSS", "GitHub API"], links: [{ type: "demo", href: "https://github-profile-visualizer-six.vercel.app/" }, { type: "code", href: "https://github.com/shashank2401/github-profile-visualizer" }] },
-      { title: "Weather App", desc: "A sleek, responsive weather application delivering real-time weather updates for any city. Features location-based forecasts, intuitive search suggestions, and seamless toggling between Celsius and Fahrenheit.", tags: ["HTML", "CSS", "JavaScript", "Weather API", "Responsive Design"], links: [{ type: "demo", href: "https://weather-app-zeta-three-62.vercel.app/" }, { type: "code", href: "https://github.com/shashank2401/weather-app" }] },
-      { title: "Soil-Water Characteristic Curve Prediction", desc: "Used Artificial Neural Networks (ANNs) to predict SWCC parameters from soil properties for plastic soils. Improved geotechnical prediction for slope stability and foundation design.", tags: ["Python", "TensorFlow", "ANN", "Soil Mechanics", "Data Analysis"], links: [{ type: "code", href: "https://github.com/shashank2401/swcc-prediction-using-ann" }] },
+      {
+        title: "Shriram Finance Digital Platforms",
+        desc: "Spearheaded development of enterprise-scale FinTech platforms at Shriram Finance, delivering 15+ integrated payment modules including Mobile Recharge, DTH, FASTag, Utilities, Credit Card, and Loan Repayment services. Engineered dynamic marketplaces for Two-Wheeler, Four-Wheeler, and EV Hub with real-time comparison capabilities. Enhanced UI responsiveness by 40%, supporting millions of monthly transactions across all services. Implemented BEM architecture and Drupal CMS integration for seamless content management and campaign optimization.",
+        image: "/assets/projects/sfl.png",
+        tags: ["Angular", "RxJS", "SCSS", "BEM", "Drupal CMS", "REST APIs", "TypeScript", "Payment Integration"],
+        links: [
+          { type: "demo", href: "https://www.shriramfinance.in/" }
+        ]
+      },
+      {
+        title: "Shriram Life Insurance — Calculators & Policy UX",
+        desc: "Built responsive UI modules for Shriram Life Insurance using Angular and RxJS. Integrated REST APIs for policy management and dashboard analytics; developed interactive calculators including BMI, Children’s Savings, Smoking, Human Life Value, Double Your Money, Savings Plans, Retirement, and HRA calculators. Managed CMS-driven customer journey pages and delivered high-performing calculators that boosted lead conversions and streamlined policy comparisons.",
+        image: "/assets/projects/slic.png",
+        tags: ["Angular", "RxJS", "Chart.js", "REST APIs", "Calculators", "CMS"],
+        links: [
+          { type: "demo", href: "https://www.shriramlife.in/" }
+        ]
+      },
+      {
+        title: "Travel Insurance Consultants (TIC) — Global Platform",
+        desc: "Developed a Next.js + React travel insurance platform for global users under Novac Technology Solutions. Built key modules — Contact Us, Get a Quote, Policy Assistance, Claims, and Help Centre. Created category pages for Holiday, Business, Student, Group, Domestic, and Schengen travel insurance. Implemented coverage detail pages for medical, cancellation, adventure, and accidental coverage. Integrated self-service portals and CMS-managed journey pages; delivered a responsive, multilingual platform that reduced claim drop-offs and improved user trust through streamlined UI workflows.",
+        image: "/assets/projects/tic.png",
+        tags: ["Next.js", "React", "Accessibility", "CMS Integration", "Responsive", "UX Optimization"],
+        links: [
+          { type: "demo", href: "https://travelinsurance.santam.co.za/" }
+        ]
+      },
+      {
+        title: "Shriram Asset Management Platform",
+        desc: "Developed a Next.js + React mutual fund and investment platform for Shriram Asset Management Company (SAMC). Implemented All Funds, Fund Details, NFO, NAV Tracking, SIP, Lumpsum and Goal Calculators using React Hooks for state and lifecycle management. Integrated CMS-driven investor journeys with KYC, SEBI and AMFI compliance workflows. Optimized the site for SEO, accessibility and runtime performance, delivering faster navigation and improved investor engagement with real-time fund tracking.",
+        image: "/assets/projects/amc.png",
+        tags: ["Next.js", "React", "React Hooks", "SEO", "Accessibility", "KYC", "SEBI", "AMFI", "Real-time Data"],
+        links: [
+          { type: "demo", href: "https://www.shriramamc.in" }
+        ]
+      },
+      {
+        title: "ZIVA® Digital Transformation Suite",
+        desc: "Contributed as a Front-End Engineer across FinTech, InsurTech, Digital Learning and ImmersiveTech domains at Novac Technology Solutions. Built enterprise-grade front ends for ZIVA®, STATIM®, AXLE™ and MIGOTO AI™ using Angular, React, TypeScript, HTML5, CSS3 and Tailwind CSS. Collaborated with product and design teams to deliver responsive, scalable UI architectures. Delivered scalable, SEO-optimized platforms with faster navigation and improved user engagement. Enhanced data transparency through real-time fund tracking and accelerated deployment timelines via modular architectures. Managed corporate portal modules — Discover Us, Leadership, CSR and Media Resources. Learn more: https://www.novactech.com/elearning-solutions",
+        image: "/assets/projects/novactech.png",
+        tags: [
+          "Angular",
+          "React",
+          "TypeScript",
+          "Tailwind CSS",
+          "RxJS",
+          "REST APIs",
+          "AI Integration",
+          "eLearning",
+          "Corporate Portal",
+          "SEO",
+          "Accessibility",
+          "Modular Architecture"
+        ],
+        links: [
+          { type: "demo", href: "https://www.novactech.com/elearning-solutions" }
+        ]
+      }
     ],
     []
   );
@@ -107,7 +170,7 @@ function ProjectsComponent() {
                 Projects
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-center mb-10">
-                Here are some of the projects I've worked on, ranging from algorithm visualizers and utilities to frontend tools and machine learning models. Each project reflects my passion for clean design, efficient problem-solving, and practical implementation.
+                Showcasing my expertise in building enterprise-scale financial platforms and digital transformation solutions. Each project demonstrates my commitment to delivering high-performance, user-centric applications with modern technologies and best practices.
             </p>
         </motion.div>
 

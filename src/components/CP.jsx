@@ -36,9 +36,9 @@ const itemVariants = {
 const PlatformCard = React.memo(({ platform }) => (
   <motion.div
     variants={itemVariants}
-    className="bg-white/90 dark:bg-neutral-900/80 border border-neutral-200 dark:border-neutral-700 rounded-2xl shadow p-6 flex flex-col items-center text-center h-full"
+    className="bg-white/90 dark:bg-neutral-900/80 border border-neutral-200 dark:border-neutral-700 rounded-2xl shadow p-6 flex flex-col items-center text-center w-[400px]"
   >
-    <div className="w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center bg-background shadow border border-border/60 mb-4">
+    <div className="w-20 h-20 rounded-xl overflow-hidden flex items-center justify-center bg-background shadow border border-border/60 mb-4">
       <img
         src={platform.logo}
         alt={`${platform.name} Logo`}
@@ -48,16 +48,16 @@ const PlatformCard = React.memo(({ platform }) => (
         loading="lazy"
       />
     </div>
-    <div className="text-lg font-semibold text-foreground">{platform.name}</div>
-    <div className="text-sm text-muted-foreground mt-1 mb-1">
+    <div className="text-2xl font-semibold text-foreground mb-2">{platform.name}</div>
+    <div className="text-base text-muted-foreground mt-1 mb-2">
       <span className="text-foreground/80">Handle:</span>{" "}
       <a href={platform.profileUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline dark:hover:text-primary-foreground/70 transition">
         {platform.handle}
       </a>
     </div>
-    <div className="flex flex-col gap-[2px] text-sm text-muted-foreground mb-3">
+    <div className="flex flex-col gap-1 text-base text-muted-foreground mb-3">
       {platform.stats.map((stat, i) => (
-        <div key={i}>
+        <div key={i} className="py-0.5">
           {stat.label}:{" "}
           <span className="font-medium text-foreground/80">{stat.value}</span>
         </div>
@@ -86,19 +86,23 @@ HighlightItem.displayName = "HighlightItem";
 // --- Main Component ---
 function CompetitiveProgrammingComponent() {
   const cpPlatforms = useMemo(() => [
-    { name: "Codeforces", logo: "/assets/logos/codeforces.png", handle: "shashank2401", profileUrl: "https://codeforces.com/profile/shashank2401", stats: [{ label: "Max Rating", value: "1600" }, { label: "Rank", value: "Expert" }] },
-    { name: "CodeChef", logo: "/assets/logos/codechef.svg", handle: "shashankraj24", profileUrl: "https://www.codechef.com/users/shashankraj24", stats: [{ label: "Max Rating", value: "1954" }, { label: "Rank", value: "4-Star" }] },
-    { name: "LeetCode", logo: "/assets/logos/leetcode.png", handle: "shashank2401", profileUrl: "https://leetcode.com/u/shashank2401/", stats: [{ label: "Max Rating", value: "2022" }, { label: "Badge", value: "Knight" }] },
-    { name: "AtCoder", logo: "/assets/logos/atcoder.png", handle: "shashank24", profileUrl: "https://atcoder.jp/users/shashank24", stats: [{ label: "Max Rating", value: "927" }, { label: "Rank", value: "6 Kyu" }] },
+    { name: "LeetCode", logo: "https://assets.leetcode.com/static_assets/others/lg2550.png", handle: "Suriya21072109", profileUrl: "https://leetcode.com/Suriya21072109/", stats: [
+      { label: "Problems Solved", value: "106/3735" },
+      { label: "Acceptance Rate", value: "71.79%" },
+      { label: "Easy Problems", value: "78/910" },
+      { label: "Medium Problems", value: "28/1944" },
+      { label: "Hard Problems", value: "0/881" },
+      { label: "Global Rank", value: "1,287,813" }
+    ] },
   ], []);
 
   const highlights = useMemo(() => [
-    { text: "Solved over ", linkText: "900+ problems", href: "https://codolio.com/profile/shashank24", rest: " across multiple CP platforms, enhancing algorithmic thinking and coding efficiency." },
-    { text: "Participated in more than ", linkText: "100 contests", href: "https://codolio.com/profile/shashank24", rest: ", consistently testing and improving my problem-solving skills." },
-    { text: "Ranked among the top with a ", linkText: "Global Rank of 755", href: "https://codeforces.com/contest/2114/standings/participant/211255102#p211255102", rest: " in Codeforces Round 1027 (Div. 3)." },
-    { text: "Achieved a notable ", linkText: "Global Rank of 849", href: "https://codeforces.com/contest/2090/standings/participant/206688395#p206688395", rest: " in Codeforces Round 1012 (Div. 2)." },
-    { text: "Earned a ", linkText: "Top 100 finish (Rank 99)", href: "https://www.codechef.com/rankings/START154D?itemsPerPage=100&order=asc&page=1&sortBy=rank", rest: " in CodeChef Starters 154 (Div. 4)." },
-    { text: "Demonstrated strong performance with a ", linkText: "Global Rank of 120", href: "https://www.codechef.com/rankings/START187B?itemsPerPage=100&order=asc&page=1&sortBy=rank", rest: " in CodeChef Starters 187 (Div. 2)." },
+    { text: "Earned prestigious ", linkText: "100 Days Badge 2025", href: "https://leetcode.com/Suriya21072109/", rest: " showcasing consistent problem-solving commitment." },
+    { text: "Mastered ", linkText: "Advanced Algorithms", href: "https://leetcode.com/Suriya21072109/", rest: " including Divide and Conquer (x4), Dynamic Programming (x3), and Trie (x1)." },
+    { text: "Strong proficiency in ", linkText: "Intermediate Concepts", href: "https://leetcode.com/Suriya21072109/", rest: " with Hash Table (x21), Math (x14), and Binary Search (x8) solutions." },
+    { text: "Demonstrated expertise in ", linkText: "Fundamental Data Structures", href: "https://leetcode.com/Suriya21072109/", rest: " including Arrays (x42), Two Pointers (x27), and Strings (x23)." },
+    { text: "Achieved impressive ", linkText: "71.79% Acceptance Rate", href: "https://leetcode.com/Suriya21072109/", rest: " across all submitted solutions." },
+    { text: "Excels in ", linkText: "JavaScript Problem-Solving", href: "https://leetcode.com/Suriya21072109/", rest: " with 106 problems solved using optimal approaches." }
   ], []);
 
   return (
@@ -116,16 +120,17 @@ function CompetitiveProgrammingComponent() {
             <span>Competitive Programming</span>
           </h2>
           <p className="text-lg text-muted-foreground">
-            My competitive programming journey has been filled with challenging
-            problems, thrilling contests, and constant learning. Here you’ll find my
-            profiles, stats, and some highlights from major platforms.
+            As a Software Engineer with 3 years of experience, my LeetCode journey reflects
+            my commitment to algorithmic excellence and continuous learning. With over 100
+            problems solved across various difficulty levels and strong proficiency in 
+            JavaScript, I focus on building a solid foundation in data structures and algorithms.
           </p>
         </motion.div>
 
-        <motion.div variants={itemVariants} className="w-full max-w-5xl">
+        <motion.div variants={itemVariants} className="w-full max-w-2xl">
           <motion.div
             variants={listContainerVariants}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            className="flex justify-center"
           >
             {cpPlatforms.map((platform) => (
               <PlatformCard key={platform.name} platform={platform} />
@@ -139,8 +144,8 @@ function CompetitiveProgrammingComponent() {
               Key Highlights
             </h3>
             <p className="text-base text-muted-foreground mb-4">
-              <a href="https://codolio.com/profile/shashank24" className="text-primary hover:underline dark:hover:text-primary-foreground/70 transition font-medium" target="_blank" rel="noopener noreferrer">
-                View my Codolio Profile for more details
+              <a href="https://leetcode.com/suriya-k7/" className="text-primary hover:underline dark:hover:text-primary-foreground/70 transition font-medium" target="_blank" rel="noopener noreferrer">
+                View my complete LeetCode profile for more details
               </a>
             </p>
             <motion.ul

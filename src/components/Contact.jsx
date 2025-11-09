@@ -128,16 +128,19 @@ function ContactComponent() {
             </p>
         </motion.div>
 
-        <motion.div variants={itemVariants}>
+        <motion.div variants={itemVariants} className="flex flex-col items-center gap-2">
           <a
-            href="mailto:shashankraj0124@gmail.com"
+            href="mailto:suriyame2107@gmail.com"
             className="flex justify-center items-center gap-2 text-primary text-lg font-medium hover:underline transition-colors duration-200"
             target="_blank"
             rel="noopener noreferrer"
           >
             <Mail className="w-5 h-5" />
-            shashankraj0124@gmail.com
+            suriyame2107@gmail.com
           </a>
+          <div className="text-sm text-muted-foreground">
+            WhatsApp: +91 8754714398
+          </div>
         </motion.div>
 
         <motion.form

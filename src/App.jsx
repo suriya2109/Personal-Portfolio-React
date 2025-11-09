@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, memo } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Analytics } from "@vercel/analytics/react";
+import { useViewportHeight } from './lib/useViewportHeight';
 
 // Import components
 import Layout from './components/Layout';
@@ -12,8 +13,9 @@ import About from "./components/About";
 import Skills from "./components/Skills";
 import Academics from "./components/Academics";
 import Projects from "./components/Projects";
-import CP from "./components/CP";
+// import CP from "./components/CP";
 import Contact from "./components/Contact";
+import Home from "./components/Home";
 
 
 // --- NEW AWESOME BACKGROUND ---
@@ -28,10 +30,10 @@ export const StaticBackground = memo(({ theme }) => {
       radial-gradient(ellipse at 10% 10%, hsla(210, 100%, 94%, 0.5), transparent),
       radial-gradient(ellipse at 90% 90%, hsla(240, 100%, 94%, 0.5), transparent),
       /* The main grid pattern */
-      linear-gradient(hsl(210, 40%, 96%) 1.5px, transparent 1.5px),
-      linear-gradient(to right, hsl(210, 40%, 96%) 1.5px, hsl(210, 40%, 98%) 1.5px)
+      linear-gradient(hsl(210, 40%, 96%) 1px, transparent 1px),
+      linear-gradient(to right, hsl(210, 40%, 96%) 1px, hsl(210, 40%, 98%) 1px)
     `,
-    backgroundSize: '40px 40px',
+    backgroundSize: 'min(40px, 10vw) min(40px, 10vw)',
   };
 
   const darkStyles = {
@@ -41,10 +43,10 @@ export const StaticBackground = memo(({ theme }) => {
       radial-gradient(ellipse at 10% 10%, hsla(212, 96%, 15%, 0.8), transparent),
       radial-gradient(ellipse at 90% 90%, hsla(260, 90%, 20%, 0.5), transparent),
       /* The main grid pattern */
-      linear-gradient(hsla(222, 47%, 13%, 1) 1.5px, transparent 1.5px),
-      linear-gradient(to right, hsla(222, 47%, 13%, 1) 1.5px, hsl(222, 47%, 11%) 1.5px)
+      linear-gradient(hsla(222, 47%, 13%, 1) 1px, transparent 1px),
+      linear-gradient(to right, hsla(222, 47%, 13%, 1) 1px, hsl(222, 47%, 11%) 1px)
     `,
-    backgroundSize: '40px 40px',
+    backgroundSize: 'min(40px, 10vw) min(40px, 10vw)',
   };
 
   // Select the appropriate styles based on the current theme
@@ -68,13 +70,13 @@ const pageTransition = { type: "tween", ease: "anticipate", duration: 0.5 };
 const AnimatedRoutes = memo(() => {
     const location = useLocation();
     const routesConfig = [
-        // THE FIX: Render the About component on the root path '/'
-        { path: "/", Component: About },
+  // Render the combined Home page (all sections) on the root path '/'
+  { path: "/", Component: Home },
         { path: "/about", Component: About },
         { path: "/skills", Component: Skills },
         { path: "/academics", Component: Academics },
         { path: "/projects", Component: Projects },
-        { path: "/cp", Component: CP },
+        // { path: "/cp", Component: CP },
         { path: "/contact", Component: Contact },
     ];
     
@@ -97,6 +99,8 @@ AnimatedRoutes.displayName = 'AnimatedRoutes';
 
 // --- THE FINAL APP COMPONENT (Using the Layout pattern) ---
 function App() {
+  useViewportHeight(); // Add the viewport height hook
+
   const [theme, setTheme] = useState(() => {
     const storedTheme = localStorage.getItem("theme");
     if (storedTheme) return storedTheme;
