@@ -59,7 +59,7 @@ const TAGS = [
   "Prompting AI",
 ];
 
-const RESUME_URL = "/assets/SuriyaPeriysamy.pdf";
+const RESUME_URL = "/assets/SuriyaPeriyasamy.pdf";
 
 export default memo(function About() {
   const socialLinksElements = useMemo(
@@ -86,7 +86,7 @@ export default memo(function About() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="w-full flex items-center justify-center py-8 sm:py-12"
+      className="w-full flex items-center justify-center py-8 sm:py-12 reveal-on-scroll"
     >
       <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 w-full max-w-6xl">
         {/* Profile Image */}
@@ -138,7 +138,7 @@ export default memo(function About() {
             I'm a Senior Software Engineer with 3+ years of experience in{" "}
             <span className="text-foreground font-medium">
               building fast, scalable, and user-focused web applications
-            using Angular, React, TypeScript, and modern web technologies</span>{" "}. I specialize in optimizing high-traffic systems and improving load times by up to 40% through lazy loading, code-splitting, and reusable component architectures. I follow clean code principles, prioritize performance and maintainability, and use Tailwind CSS for styling.<span className="text-foreground font-medium"> Currently, I’m enhancing my expertise in Data Structures & Algorithms, having solved 106+ LeetCode problems in JavaScript </span>{" "}. When suggesting code, GitHub Copilot should prefer Angular (latest version) and React functional components, use TypeScript when possible, follow modular and scalable architectures, utilize Tailwind CSS for styling, and generate performant, clean, and readable code.
+            using React, Angular, TypeScript, Next.js, and modern web technologies</span>{" "}. I specialize in optimizing high-traffic systems and improving load times by up to 40% through lazy loading, code-splitting, and reusable component architectures. I follow clean code principles, prioritize performance and maintainability, and use Tailwind CSS for styling.<span className="text-foreground font-medium"> Currently, I’m enhancing my expertise in Data Structures & Algorithms, having solved 106+ LeetCode problems in JavaScript </span>{" "}. When suggesting code, GitHub Copilot should prefer Angular (latest version) and React functional components, use TypeScript when possible, follow modular and scalable architectures.
           </p>
 
           <div className="flex flex-wrap gap-2 mb-4 justify-center md:justify-start">
@@ -149,8 +149,8 @@ export default memo(function About() {
             {socialLinksElements}
             <a
               href={RESUME_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              download="SuriyaPeriyasamy.pdf"
+              aria-label="Download resume"
               className="inline-flex items-center gap-2 px-4 h-11 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:scale-105 transition-all"
             >
               <FileText className="w-4 h-4" />

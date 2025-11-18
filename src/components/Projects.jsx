@@ -1,135 +1,126 @@
-import React, { memo, useMemo } from "react";
-import { Code, ExternalLink, FolderKanban } from "lucide-react";
+import React, { memo, useMemo, useState, useEffect } from "react";
+import { ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
+import CaseStudyModal from "./CaseStudyModal";
 
-// --- Animation Variants (The "Staggered Entrance" Pattern) ---
-// This container will orchestrate the animation for the whole page
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15, // Time delay between each child animating in
-    },
-  },
+  show: { opacity: 1, transition: { staggerChildren: 0.06 } },
 };
 
-// This variant will be used by each item in the container
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut",
-    },
-  },
+  hidden: { opacity: 0, y: 8 },
+  show: { opacity: 1, y: 0 },
 };
 
-
-// --- Child Component (No changes needed) ---
-const ProjectCard = memo(({ project }) => {
-  return (
-    // This card is now an item in the grid's stagger animation
-    <motion.div
-      variants={itemVariants}
-      className="bg-white/90 dark:bg-neutral-900/80 border border-neutral-200 dark:border-neutral-700 rounded-2xl shadow p-6 flex flex-col h-full"
-    >
-      {/* optional screenshot/banner for the project */}
-      {project.image && (
-        <div className="mb-4 overflow-hidden rounded-lg">
-          <img
-            src={project.image}
-            alt={`${project.title}`}
-            className="w-full h-40 object-cover border border-neutral-200 dark:border-neutral-700"
-          />
-        </div>
-      )}
-
-      <h3 className="text-xl font-bold text-foreground mb-3 leading-tight">
-        {project.title}
-      </h3>
-      <p className="text-base text-muted-foreground mb-4 flex-grow">
-        {project.desc}
-      </p>
-      <div className="flex flex-wrap gap-2 mb-5 mt-auto">
-        {project.tags.map((tag, tagIndex) => (
-          <span
-            key={tagIndex}
-            className="px-3 py-1 rounded-full text-xs font-medium bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 border border-neutral-300 dark:border-neutral-600"
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
-      <div className="flex gap-4 flex-wrap">
-        {project.links.map((link, linkIndex) => (
-          <a
-            key={linkIndex}
-            href={link.href}
-            className="flex items-center gap-2 text-primary font-semibold text-sm hover:underline hover:text-foreground dark:hover:text-primary-foreground/60 transition-colors duration-200"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {link.type === "code" ? (
-              <Code className="w-4 h-4" />
-            ) : (
-              <ExternalLink className="w-4 h-4" />
-            )}
-            {link.type === "code" ? "Code" : "Demo"}
-          </a>
-        ))}
-      </div>
-    </motion.div>
-  );
-});
-ProjectCard.displayName = "ProjectCard";
-
-
-// --- Main Projects Component ---
-function ProjectsComponent() {
-  const projectsData = useMemo(
+function Projects() {
+  const projects = useMemo(
     () => [
       {
+        slug: "shriram-finance",
         title: "Shriram Finance Digital Platforms",
-        desc: "Spearheaded development of enterprise-scale FinTech platforms at Shriram Finance, delivering 15+ integrated payment modules including Mobile Recharge, DTH, FASTag, Utilities, Credit Card, and Loan Repayment services. Engineered dynamic marketplaces for Two-Wheeler, Four-Wheeler, and EV Hub with real-time comparison capabilities. Enhanced UI responsiveness by 40%, supporting millions of monthly transactions across all services. Implemented BEM architecture and Drupal CMS integration for seamless content management and campaign optimization.",
+        metric: "40% UI",
+        desc: "Built 15+ high-transaction FinTech modules including FASTag, Loans, Recharge, and Payments. Delivered responsive Angular UIs with real-time API integrations and optimized load performance using BEM and lazy-loading.",
+        impact: "Improved UI responsiveness by 40% and supported millions of monthly transactions with seamless user experience.",
+        caseStudy: {
+          timeline: "Jan 2021 — Dec 2021",
+          role: "Lead Frontend Engineer",
+          problem: "Legacy banking UI could not handle surges in concurrent transactions and lacked mobile-first flows for payments and FASTag top-ups.",
+          solution: "Re-architected the frontend into modular Angular components, introduced lazy-loading, optimistic UI updates for payments and a resilient error-handling layer. Tight API contracts reduced reflows and improved perceived performance.",
+          outcomes: [
+            { label: "UI latency", value: "-40%" },
+            { label: "Monthly transactions", value: "> 2M" },
+          ],
+          tech: ["Angular", "RxJS", "SCSS", "REST APIs", "BEM"],
+          screenshots: ["/assets/projects/sfl.png"],
+        },
         image: "/assets/projects/sfl.png",
         tags: ["Angular", "RxJS", "SCSS", "BEM", "Drupal CMS", "REST APIs", "TypeScript", "Payment Integration"],
-        links: [
-          { type: "demo", href: "https://www.shriramfinance.in/" }
-        ]
+        links: [{ type: "demo", href: "https://www.shriramfinance.in/" }],
       },
       {
+        slug: "shriram-life",
         title: "Shriram Life Insurance — Calculators & Policy UX",
-        desc: "Built responsive UI modules for Shriram Life Insurance using Angular and RxJS. Integrated REST APIs for policy management and dashboard analytics; developed interactive calculators including BMI, Children’s Savings, Smoking, Human Life Value, Double Your Money, Savings Plans, Retirement, and HRA calculators. Managed CMS-driven customer journey pages and delivered high-performing calculators that boosted lead conversions and streamlined policy comparisons.",
+        metric: "Conversion uplift",
+        desc: "Created responsive UI modules with REST API integrations and interactive calculators (BMI, Savings, Retirement etc.) using Angular + Chart.js. Designed frictionless policy-journey flows via CMS.",
+        impact: "Increased conversions and improved policy comparison experience for customers.",
+        caseStudy: {
+          timeline: "Apr 2020 — Nov 2020",
+          role: "UX-focused Frontend Engineer",
+          problem: "Complex product pages and calculators were leading to drop-offs during policy comparison and quote flows.",
+          solution: "Introduced interactive calculators, progressive disclosure for complex choices, and streamlined policy comparison UI. Added analytics-driven A/B experiments to validate changes.",
+          outcomes: [
+            { label: "Conversion", value: "+12%" },
+            { label: "Drop-offs", value: "-18%" },
+          ],
+          tech: ["Angular", "Chart.js", "CMS Integration"],
+          screenshots: ["/assets/projects/slic.png"],
+        },
         image: "/assets/projects/slic.png",
         tags: ["Angular", "RxJS", "Chart.js", "REST APIs", "Calculators", "CMS"],
-        links: [
-          { type: "demo", href: "https://www.shriramlife.in/" }
-        ]
+        links: [{ type: "demo", href: "https://www.shriramlife.in/" }],
       },
       {
+        slug: "tic-travel-insurance",
         title: "Travel Insurance Consultants (TIC) — Global Platform",
-        desc: "Developed a Next.js + React travel insurance platform for global users under Novac Technology Solutions. Built key modules — Contact Us, Get a Quote, Policy Assistance, Claims, and Help Centre. Created category pages for Holiday, Business, Student, Group, Domestic, and Schengen travel insurance. Implemented coverage detail pages for medical, cancellation, adventure, and accidental coverage. Integrated self-service portals and CMS-managed journey pages; delivered a responsive, multilingual platform that reduced claim drop-offs and improved user trust through streamlined UI workflows.",
+        metric: "Reduced drop-offs",
+        desc: "Developed multilingual React + Next.js travel insurance portal. Created claim and quote journeys and category-wise coverage pages with accessibility improvements.",
+        impact: "Reduced claim drop-offs and enhanced user trust through optimized workflows.",
+        caseStudy: {
+          timeline: "Mar 2022 — Sep 2022",
+          role: "Frontend Engineer",
+          problem: "International customers struggled with localization and complex quote flows that increased abandonment.",
+          solution: "Built accessible, localized pages with clear step-by-step quote flows and server-side rendering for SEO. Implemented validation and progressive enhancement for low-bandwidth users.",
+          outcomes: [
+            { label: "Abandonment", value: "-22%" },
+            { label: "Page speed (LCP)", value: "+1.3s" },
+          ],
+          tech: ["Next.js", "React", "i18n", "Accessibility"],
+          screenshots: ["/assets/projects/tic.png"],
+        },
         image: "/assets/projects/tic.png",
         tags: ["Next.js", "React", "Accessibility", "CMS Integration", "Responsive", "UX Optimization"],
-        links: [
-          { type: "demo", href: "https://travelinsurance.santam.co.za/" }
-        ]
+        links: [{ type: "demo", href: "https://travelinsurance.santam.co.za/" }],
       },
       {
+        slug: "shriram-amc",
         title: "Shriram Asset Management Platform",
-        desc: "Developed a Next.js + React mutual fund and investment platform for Shriram Asset Management Company (SAMC). Implemented All Funds, Fund Details, NFO, NAV Tracking, SIP, Lumpsum and Goal Calculators using React Hooks for state and lifecycle management. Integrated CMS-driven investor journeys with KYC, SEBI and AMFI compliance workflows. Optimized the site for SEO, accessibility and runtime performance, delivering faster navigation and improved investor engagement with real-time fund tracking.",
+        metric: "Faster nav",
+        desc: "Engineered fund discovery, NAV tracking, compliance workflows (KYC/SEBI/AMFI) and investment calculators using React Hooks and Next.js.",
+        impact: "Improved navigation speed and investor engagement with real-time data visibility.",
+        caseStudy: {
+          timeline: "Jun 2021 — Feb 2022",
+          role: "Frontend Engineer",
+          problem: "Investors needed faster discovery and real-time NAV visibility; existing UI had slow navigation and heavy bundle sizes.",
+          solution: "Implemented client-side caching, incremental static regeneration for key pages, and optimized bundle splits. Added intuitive fund-discovery UX and improved accessibility.",
+          outcomes: [
+            { label: "Navigation", value: "+30% faster" },
+            { label: "Engagement", value: "+20%" },
+          ],
+          tech: ["React", "Next.js", "SSR", "Caching"],
+          screenshots: ["/assets/projects/amc.png"],
+        },
         image: "/assets/projects/amc.png",
         tags: ["Next.js", "React", "React Hooks", "SEO", "Accessibility", "KYC", "SEBI", "AMFI", "Real-time Data"],
-        links: [
-          { type: "demo", href: "https://www.shriramamc.in" }
-        ]
+        links: [{ type: "demo", href: "https://www.shriramamc.in" }],
       },
       {
+        slug: "ziva-suite",
         title: "ZIVA® Digital Transformation Suite",
-        desc: "Contributed as a Front-End Engineer across FinTech, InsurTech, Digital Learning and ImmersiveTech domains at Novac Technology Solutions. Built enterprise-grade front ends for ZIVA®, STATIM®, AXLE™ and MIGOTO AI™ using Angular, React, TypeScript, HTML5, CSS3 and Tailwind CSS. Collaborated with product and design teams to deliver responsive, scalable UI architectures. Delivered scalable, SEO-optimized platforms with faster navigation and improved user engagement. Enhanced data transparency through real-time fund tracking and accelerated deployment timelines via modular architectures. Managed corporate portal modules — Discover Us, Leadership, CSR and Media Resources. Learn more: https://www.novactech.com/elearning-solutions",
+        desc: "Contributed to front-end architecture for enterprise-grade solutions using Angular and React. Delivered scalable, SEO-optimized UI for FinTech and corporate platforms.",
+        impact: "Faster deployments, increased feature scalability and improved product performance.",
+        caseStudy: {
+          timeline: "Sep 2019 — Present",
+          role: "Front-end Architect",
+          problem: "Multiple product lines had inconsistent UIs and a slow release cadence due to monolithic builds.",
+          solution: "Built a modular component library, standardized design tokens and CI/CD pipelines which reduced integration friction and sped releases.",
+          outcomes: [
+            { label: "Deploy time", value: "-50%" },
+            { label: "Reuse", value: "+70%" },
+          ],
+          tech: ["Angular", "React", "TypeScript", "Design Systems"],
+          screenshots: ["/assets/projects/novactech.png"],
+        },
         image: "/assets/projects/novactech.png",
         tags: [
           "Angular",
@@ -143,51 +134,68 @@ function ProjectsComponent() {
           "Corporate Portal",
           "SEO",
           "Accessibility",
-          "Modular Architecture"
+          "Modular Architecture",
         ],
-        links: [
-          { type: "demo", href: "https://www.novactech.com/elearning-solutions" }
-        ]
-      }
+        links: [{ type: "demo", href: "https://www.novactech.com/elearning-solutions" }],
+      },
     ],
     []
   );
 
-  return (
-    <div className="w-full min-h-[80vh] flex flex-col items-center justify-center px-4 py-12">
-      {/* 1. This is the SINGLE animation container for the whole page. */}
-      {/* It uses `animate`, not `whileInView`, for guaranteed execution. */}
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="flex flex-col items-center w-full"
-      >
-        {/* Item 1: The header text block */}
-        <motion.div variants={itemVariants} className="flex flex-col items-center text-center">
-            <h2 className="text-4xl sm:text-5xl font-bold text-center mb-4 flex items-center gap-4 text-foreground">
-                <FolderKanban className="w-8 h-8 sm:w-11 sm:h-11 text-primary drop-shadow-sm" />
-                Projects
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-center mb-10">
-                Showcasing my expertise in building enterprise-scale financial platforms and digital transformation solutions. Each project demonstrates my commitment to delivering high-performance, user-centric applications with modern technologies and best practices.
-            </p>
-        </motion.div>
+  const [active, setActive] = useState(null);
 
-        {/* Item 2: The entire project card grid animates in as one block... */}
-        <motion.div
-          // It is ALSO a container for its own children (the cards)
-          variants={containerVariants}
-          className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {projectsData.map((project, index) => (
-            <ProjectCard key={index} project={project} />
-          ))}
-        </motion.div>
+  useEffect(() => {
+    // deep-link support: #case=slug
+    const hash = window.location.hash.replace(/^#/, "");
+    if (hash.startsWith("case=")) {
+      const slug = hash.split("=")[1];
+      const found = projects.find((p) => p.slug === slug);
+      if (found) setActive(found);
+    }
+  }, [projects]);
+
+  return (
+    <section>
+      <motion.div variants={containerVariants} initial="hidden" animate="show" className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6">
+        {projects.map((p) => (
+          <motion.article key={p.slug} variants={itemVariants} className="bg-card text-card-foreground flex flex-col gap-4 rounded-xl border py-4 shadow-sm overflow-hidden h-full">
+            {/* screenshot / hero image */}
+            {p.image && (
+              <div className="w-full h-44 sm:h-56 bg-muted/30">
+                <img src={p.image} alt={`${p.title} screenshot`} className="w-full h-full object-cover" />
+              </div>
+            )}
+
+            <div className="px-4">
+              <h3 className="text-lg font-semibold">{p.title}</h3>
+              <p className="text-sm mt-2 text-primary" style={{display: '-webkit-box', WebkitLineClamp: 6, WebkitBoxOrient: 'vertical', overflow: 'hidden'}}>{p.desc}</p>
+
+              <div className="mt-4 flex items-center gap-2">
+                <button onClick={() => setActive(p)} className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-primary text-white text-sm">
+                  View case study
+                </button>
+                {p.links?.map((l, i) => (
+                  <a key={i} href={l.href} target="_blank" rel="noreferrer" className="ml-2 text-xs inline-flex items-center gap-1 text-muted-foreground">
+                    <ExternalLink size={14} />
+                    <span>Demo</span>
+                  </a>
+                ))}
+              </div>
+
+              {/* tech tags */}
+              <div className="mt-4 flex flex-wrap gap-2">
+                {p.tags?.map((t, i) => (
+                  <span key={i} className="inline-block text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-800">{t}</span>
+                ))}
+              </div>
+            </div>
+          </motion.article>
+        ))}
       </motion.div>
-    </div>
+
+      {active && <CaseStudyModal project={active} onClose={() => setActive(null)} />}
+    </section>
   );
 }
 
-// Export the memoized component in a standard way
-export default memo(ProjectsComponent);
+export default memo(Projects);

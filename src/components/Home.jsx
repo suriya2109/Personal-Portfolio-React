@@ -15,7 +15,7 @@ const SectionWrapper = ({ id, children }) => (
     className="snap-start min-h-screen w-full py-16 flex items-center justify-center"
     aria-label={id}
   >
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 stagger">
       {children}
     </div>
   </section>

@@ -79,11 +79,16 @@ function ContactComponent() {
 
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
+    // keep the last-submitted data as a fallback for mailto link on failure
+    setLastSubmit(data);
 
     try {
       const response = await fetch("https://formspree.io/f/mldnaeeb", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
         body: JSON.stringify(data),
       });
 
@@ -95,17 +100,35 @@ function ContactComponent() {
         e.target.reset();
         setTimeout(() => setFormState({ status: "idle", message: "" }), 5000);
       } else {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to send message");
+        // Try to parse the JSON error body, but fail gracefully if it's not JSON
+        let errorText = `Request failed with status ${response.status}`;
+        try {
+          const errorData = await response.json();
+          errorText = errorData.error || errorData.message || JSON.stringify(errorData);
+        } catch (parseErr) {
+          try {
+            const txt = await response.text();
+            if (txt) errorText = txt;
+          } catch (_e) {}
+        }
+        console.error("Form submit failed:", response.status, errorText);
+        throw new Error(errorText || "Failed to send message");
       }
     } catch (error) {
+      console.error("Contact form error:", error);
       setFormState({
         status: "error",
-        message: "An error occurred. Please try again or email me directly.",
+        message:
+          error?.message
+            ? `An error occurred: ${error.message}`
+            : "An error occurred. Please try again or email me directly.",
       });
       setTimeout(() => setFormState({ status: "idle", message: "" }), 5000);
     }
   };
+
+  // track the last submitted form values to provide a mailto fallback
+  const [lastSubmit, setLastSubmit] = useState(null);
 
   return (
     <div className="w-full min-h-[80vh] flex flex-col items-center justify-center px-4 py-12">
@@ -153,6 +176,23 @@ function ContactComponent() {
               <StatusMessage status={formState.status} message={formState.message} />
             </motion.div>
           </AnimatePresence>
+          {formState.status === "error" && lastSubmit && (
+            <motion.div variants={itemVariants} className="mt-2 text-sm">
+              <div className="text-muted-foreground">You can also email directly:</div>
+              <a
+                href={`mailto:suriyame2107@gmail.com?subject=${encodeURIComponent(
+                  `Contact from ${lastSubmit.name || "Website"}`
+                )}&body=${encodeURIComponent(
+                  `${lastSubmit.message || ""}\n\nFrom: ${lastSubmit.name || ""} <${lastSubmit.email || ""}>`
+                )}`}
+                className="text-primary underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Send email directly to suriyame2107@gmail.com
+              </a>
+            </motion.div>
+          )}
           
           <motion.div variants={itemVariants}>
             <Input type="text" name="name" placeholder="Your Name" required disabled={formState.status === "loading"} className="text-foreground disabled:opacity-50" />
